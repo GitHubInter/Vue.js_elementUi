@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <el-button @click="show">按钮</el-button>
+    <p>hello world</p>
   </div>
 </template>
 
