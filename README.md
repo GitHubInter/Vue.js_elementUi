@@ -1,4 +1,4 @@
-# vue_element
+# element_ui
 
 ## Project setup
 ```
