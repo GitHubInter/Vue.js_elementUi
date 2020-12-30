@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <el-form inline :model="data" :rules="rules" ref="form" validate-on-rule-change>
-      <el-form-item label="审批人" prop="user">
+    <el-form inline :model="data" :rules="rules" ref="form" validate-on-rule-change status-icon>
+      <el-form-item label="审批人" prop="user" :validate-status="status" :error="error">
         <el-input v-model="data.user" placeholder="审批人"></el-input>
       </el-form-item>
       <el-form-item label="活动区域">
@@ -13,6 +13,9 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
         <el-button type="primary" @click="addRule">添加校验规则</el-button>
+        <el-button type="success" @click="showSuccess">成功校验</el-button>
+        <el-button type="danger" @click="showError">失败校验</el-button>
+        <el-button type="warning" @click="showValidating">校验中</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -30,6 +33,8 @@ export default {
     //   }
     // };
     return {
+      error: "",
+      status: "",
       data: {
         user: "",
         region: "",
@@ -67,6 +72,18 @@ export default {
       ];
       this.rules = Object.assign({}, this.rules, { user: newRule });
     },
+    showError() {
+      this.status = 'error'
+      this.error = '用户名输入有误'
+    },
+    showSuccess() {
+      this.status = 'success'
+      this.error = ''
+    },
+    showValidating() {
+      this.status = 'validating'
+      this.error = ''
+    }
   },
 };
 </script>
