@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <el-form inline :model="data">
-      <el-form-item label="审批人">
+    <el-form inline :model="data" :rules="rules" ref="form">
+      <el-form-item label="审批人" prop="user">
         <el-input v-model="data.user" placeholder="审批人"></el-input>
       </el-form-item>
       <el-form-item label="活动区域">
@@ -19,20 +19,37 @@
 
 <script>
 export default {
-  name: 'app',
+  name: "app",
   data() {
+    const userValidator = (rule, value, callback) => {
+      if (value.length > 3) {
+        callback();
+      } else {
+        callback(new Error("用户名长度必须大于3"));
+      }
+    };
     return {
       data: {
-        user: 'sam',
-        region: '区域二'
-      }
-    }
+        user: "",
+        region: "",
+      },
+      rules: {
+        user: [
+          { required: true, trigger: "blur", message: "用户名必须录入" },
+          { validator: userValidator, trigger: "change" },
+        ],
+      },
+    };
   },
   methods: {
     /* eslint-disable */
     onSubmit() {
-      console.log(this.data)
-    }
-  }
-}
+      console.log(this.data);
+      //表单验证
+      this.$refs.form.validate((isValid, errors) => {
+        console.log(isValid, errors)
+      })
+    },
+  },
+};
 </script>
