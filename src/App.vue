@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-form inline :model="data" :rules="rules" ref="form">
+    <el-form inline :model="data" :rules="rules" ref="form" validate-on-rule-change>
       <el-form-item label="审批人" prop="user">
         <el-input v-model="data.user" placeholder="审批人"></el-input>
       </el-form-item>
@@ -12,6 +12,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="addRule">添加校验规则</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -21,13 +22,13 @@
 export default {
   name: "app",
   data() {
-    const userValidator = (rule, value, callback) => {
-      if (value.length > 3) {
-        callback();
-      } else {
-        callback(new Error("用户名长度必须大于3"));
-      }
-    };
+    // const userValidator = (rule, value, callback) => {
+    //   if (value.length > 3) {
+    //     callback();
+    //   } else {
+    //     callback(new Error("用户名长度必须大于3"));
+    //   }
+    // };
     return {
       data: {
         user: "",
@@ -36,7 +37,7 @@ export default {
       rules: {
         user: [
           { required: true, trigger: "blur", message: "用户名必须录入" },
-          { validator: userValidator, trigger: "change" },
+          // { validator: userValidator, trigger: "change" },
         ],
       },
     };
@@ -47,8 +48,24 @@ export default {
       console.log(this.data);
       //表单验证
       this.$refs.form.validate((isValid, errors) => {
-        console.log(isValid, errors)
-      })
+        console.log(isValid, errors);
+      });
+    },
+    addRule() {
+      const userValidator = (rule, value, callback) => {
+        if (value.length > 3) {
+          this.inputError = "";
+          this.inputValidateStatus = "";
+          callback();
+        } else {
+          callback(new Error("用户名长度必须大于3"));
+        }
+      };
+      const newRule = [
+        ...this.rules.user,
+        { validator: userValidator, trigger: "change" },
+      ];
+      this.rules = Object.assign({}, this.rules, { user: newRule });
     },
   },
 };
