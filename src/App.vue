@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-form  :model="data">
+    <el-form inline :model="data">
       <el-form-item label="审批人">
         <el-input v-model="data.user" placeholder="审批人"></el-input>
       </el-form-item>
