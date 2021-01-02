@@ -1,10 +1,20 @@
 <template>
-  <div>Componment A</div>
+  <div>
+    <p>Componment A</p>
+    <button @click="addRoute">AddRoute</button><br>
+    <router-link to="/b">to B page</router-link>
+  </div>
 </template>
 
 <script>
+import B from "./B";
 /* eslint-disable */
 export default {
+  methods: {
+    addRoute() {
+      this.$router.addRoutes([{ path: "/b", component: B }]);
+    },
+  },
   beforeCreate() {
     console.log("beforeCreate");
   },
