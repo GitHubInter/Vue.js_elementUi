@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <router-view></router-view>
     <el-form
       style="width: 500px"
       label-width="100px"
