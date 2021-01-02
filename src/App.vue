@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <router-view></router-view>
     <el-form
       style="width: 500px"
       label-width="100px"
@@ -41,6 +40,7 @@
         <el-button type="warning" @click="showValidating">校验中</el-button> -->
       </el-form-item>
     </el-form>
+    <router-view></router-view>
   </div>
 </template>
 
